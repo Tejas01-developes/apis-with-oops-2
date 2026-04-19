@@ -4,6 +4,7 @@ import connect from './dbconnection/dbconnection.js'
 import { route } from "./routes/routes.js";
 
 
+
 class server{
     private app:Application
     private port:number
@@ -20,8 +21,9 @@ class server{
 this.app.use(express.urlencoded({extended:true}))
 this.app.use(express.json())
 connect.dbconnect();
-const router=new route()
-this.app.use("/apis",router.methods())
+const routes=new route()
+this.app.use("/apis",routes.routes());
+
     }
 
     private inetializeserver(){

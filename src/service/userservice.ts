@@ -1,65 +1,166 @@
-import { Db } from 'mongodb';
-import connect from '../dbconnection/dbconnection.js';
+import { Collection } from "mongodb";
+import connect from '../dbconnection/dbconnection.js'
+import dotenv from 'dotenv';
+dotenv.config();
 
-type controllerrecivetype1={
-    userid:string
+
+type controllertype1={
+    userid:string,
     name:string,
+    email:string,
+    password:string,
     age:number,
-    profession:string,
+    salary:number,
     experience:number
 }
 
-
-
-
-
-
 export class insertservice{
-private insertdb
+private collection:Collection
+    constructor(){
+        this.collection=connect.getdb().collection(process.env.USER_COLLECTION as string)
+    }
 
-constructor(){
-this.insertdb=connect.getdb().collection<controllerrecivetype1>(process.env.DB as string)
-}
-async insertservice(data:controllerrecivetype1):Promise<string>{
+   async insertusers(data:controllertype1):Promise<string>{
     try{
-   await this.insertdb.insertOne({userid:data.userid,name:data.name,age:data.age,profession:data.profession,experience:data.experience})
-    return "insert done"
-}catch(err){
-    throw new Error("insertion failed")
-}
+       await this.collection.insertOne({userid:data.userid,name:data.name,email:data.email,password:data.password,age:data.age,salary:data.salary,experience:data.experience})
+
+        return "user inserted"
+    }catch(err){
+        throw new Error("user insertion failed")
+    }
 }
 }
 
-type recivedetails={
+
+
+
+type controllertype2={
+    userid:string,
     name:string,
-    age:number,
-    profession:string,
+   collage:string
+   passout:number
+    marks:number
+    profession:string
 }
-type findtype={
+
+export class insertservice2{
+private collection:Collection
+    constructor(){
+        this.collection=connect.getdb().collection(process.env.USER_COLLECTION2 as string)
+    }
+
+   async insertusers(data:controllertype2):Promise<string>{
+    try{
+       await this.collection.insertOne({userid:data.userid,name:data.name,collage:data.collage,passout:data.passout,marks:data.marks,profession:data.profession})
+
+        return "user inserted"
+    }catch(err){
+        throw new Error("user insertion failed")
+    }
+}
+}
+
+// type getdetailstype={
+//     userid:string,
+//     name:string,
+//     email:string,
+//     password:string,
+//     age:number,
+//     salary:number,
+//     experience:number
+//     collage:string
+//     passout:number
+//      marks:number
+//      profession:string
+// }
+
+type controllertype3={
     name:string
 }
 
-export class getuserservice{
-    private database:Db
-    private collection:string
-
+export class getdetials{
+private dbcollection:Collection
     constructor(){
-        this.collection=process.env.DB as string
-        this.database=connect.getdb()
-        
+this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION as string)
     }
-   async getusers(data:findtype):Promise<recivedetails | null>{
-    try{
-const res=await this.database.collection<recivedetails>(this.collection).findOne({name:data.name})
+
+    async getuserdetails(data:controllertype3){
+const res=await this.dbcollection.aggregate([{$match:{name:data.name}},{$lookup:{from :process.env.USER_COLLECTION2,
+    localField:"name",
+    foreignField:"name",
+    as:"lookupexample"
+}}]).toArray();
+
 return res
-    }catch(err){
-        throw new Error("cant get the details")
+
     }
 }
+
+
+// export class addfield{
+// private collection:Collection
+//     constructor(){
+// this.collection=connect.getdb().collection(process.env.USER_COLLECTION2 as string)
+//     }
+//     addingfield(){
+//         this.collection.aggregate([{$addfield:{state:"Gujarat"}}])
+//     }
+// }
+
+
+
+
+
+type controllertype4={
+    userid:string,
+    name:string,
+   marks:number
 }
 
+export class insertservice3{
+    private collection:Collection
+        constructor(){
+            this.collection=connect.getdb().collection(process.env.USER_COLLECTION3 as string)
+        }
+    
+       async insertusers(data:controllertype4):Promise<string>{
+        try{
+           await this.collection.insertOne({userid:data.userid,name:data.name,marks:data.marks})
+    
+            return "user inserted"
+        }catch(err){
+            throw new Error("user insertion failed")
+        }
+    }
+    }
 
 
 
+    type controllertype5={
+    name:string
+}
 
+export class getdetials2{
+private dbcollection:Collection
+    constructor(){
+this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION2 as string)
+    }
 
+    async getuserdetails(data:controllertype5){
+const res=await this.dbcollection.aggregate([
+    {$match:{name:data.name}},
+    {$lookup:{from :process.env.USER_COLLECTION3,
+    localField:"name",
+    foreignField:"name",
+    as:"lookupexample2"
+}},
+// {$addField:{totalmarks:{$add:[{$toInt:"$marks"},{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:"$$item.marks"}}}}]}}}
+
+// {$addFields:{totalmarks:{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:"$$item.marks"}}}}}}
+
+]).toArray();
+
+return res
+
+    }
+}
