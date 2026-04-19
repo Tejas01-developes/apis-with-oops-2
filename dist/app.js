@@ -19,8 +19,8 @@ class server {
         this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use(express_1.default.json());
         dbconnection_js_1.default.dbconnect();
-        const router = new routes_js_1.route();
-        this.app.use("/apis", router.methods());
+        const routes = new routes_js_1.route();
+        this.app.use("/apis", routes.routes());
     }
     inetializeserver() {
         this.app.listen(this.port, () => {

@@ -11,14 +11,22 @@ class route {
     constructor() {
         this.router = express_1.default.Router();
     }
-    methods() {
-        const insertapi = new usercontroller_1.insertuser();
+    routes() {
+        const insertapi = new usercontroller_1.userinsertcontroller();
         this.router.post("/", (req, resp) => {
             insertapi.insertuser(req, resp);
         });
-        const getapi = new usercontroller_1.details();
+        const insertapi2 = new usercontroller_1.userinsertcontroller2();
+        this.router.post("/2", (req, resp) => {
+            insertapi2.insertuser(req, resp);
+        });
+        const getapi1 = new usercontroller_1.getdetails();
         this.router.get("/get", (req, resp) => {
-            getapi.getusersdetails(req, resp);
+            getapi1.getdetailsofuser(req, resp);
+        });
+        const fieldapi = new usercontroller_1.fieldadd();
+        this.router.post("/add", (req, resp) => {
+            fieldapi.addfields(req, resp);
         });
         return this.router;
     }

@@ -1,28 +1,42 @@
-type controllerrecivetype1 = {
+type controllertype1 = {
     userid: string;
     name: string;
+    email: string;
+    password: string;
     age: number;
-    profession: string;
+    salary: number;
     experience: number;
 };
 export declare class insertservice {
-    private insertdb;
-    constructor();
-    insertservice(data: controllerrecivetype1): Promise<string>;
-}
-type recivedetails = {
-    name: string;
-    age: number;
-    profession: string;
-};
-type findtype = {
-    name: string;
-};
-export declare class getuserservice {
-    private database;
     private collection;
     constructor();
-    getusers(data: findtype): Promise<recivedetails | null>;
+    insertusers(data: controllertype1): Promise<string>;
+}
+type controllertype2 = {
+    userid: string;
+    name: string;
+    collage: string;
+    passout: number;
+    marks: number;
+    profession: string;
+};
+export declare class insertservice2 {
+    private collection;
+    constructor();
+    insertusers(data: controllertype2): Promise<string>;
+}
+type controllertype3 = {
+    name: string;
+};
+export declare class getdetials {
+    private dbcollection;
+    constructor();
+    getuserdetails(data: controllertype3): Promise<import("bson").Document[]>;
+}
+export declare class addfield {
+    private collection;
+    constructor();
+    addingfield(): void;
 }
 export {};
 //# sourceMappingURL=userservice.d.ts.map
