@@ -29,8 +29,20 @@ export declare class getdetails {
     constructor();
     getdetailsofuser(req: Request<{}, {}, bodytype3>, resp: Response): Promise<Response<any, Record<string, any>> | undefined>;
 }
-export declare class fieldadd {
-    addfields(req: Request, resp: Response): Promise<void>;
+type bodytype4 = {
+    name: string;
+    marks: number;
+};
+export declare class userinsertcontroller3 {
+    constructor();
+    insertuser(req: Request<{}, {}, bodytype4>, resp: Response): Promise<void>;
+}
+type bodytype5 = {
+    name: string;
+};
+export declare class getdetail2 {
+    constructor();
+    getdetailsofuser(req: Request<{}, {}, bodytype5>, resp: Response): Promise<Response<any, Record<string, any>> | undefined>;
 }
 export {};
 //# sourceMappingURL=usercontroller.d.ts.map

@@ -20,14 +20,22 @@ class route {
         this.router.post("/2", (req, resp) => {
             insertapi2.insertuser(req, resp);
         });
+        const insertapi3 = new usercontroller_1.userinsertcontroller3();
+        this.router.post("/3", (req, resp) => {
+            insertapi3.insertuser(req, resp);
+        });
         const getapi1 = new usercontroller_1.getdetails();
         this.router.get("/get", (req, resp) => {
             getapi1.getdetailsofuser(req, resp);
         });
-        const fieldapi = new usercontroller_1.fieldadd();
-        this.router.post("/add", (req, resp) => {
-            fieldapi.addfields(req, resp);
+        const getapi2 = new usercontroller_1.getdetail2();
+        this.router.get("/get2", (req, resp) => {
+            getapi2.getdetailsofuser(req, resp);
         });
+        //   const fieldapi=new fieldadd();
+        //   this.router.post("/add",(req,resp)=>{
+        //     fieldapi.addfields(req,resp)
+        //   })
         return this.router;
     }
 }

@@ -33,10 +33,23 @@ export declare class getdetials {
     constructor();
     getuserdetails(data: controllertype3): Promise<import("bson").Document[]>;
 }
-export declare class addfield {
+type controllertype4 = {
+    userid: string;
+    name: string;
+    marks: number;
+};
+export declare class insertservice3 {
     private collection;
     constructor();
-    addingfield(): void;
+    insertusers(data: controllertype4): Promise<string>;
+}
+type controllertype5 = {
+    name: string;
+};
+export declare class getdetials2 {
+    private dbcollection;
+    constructor();
+    getuserdetails(data: controllertype5): Promise<import("bson").Document[]>;
 }
 export {};
 //# sourceMappingURL=userservice.d.ts.map

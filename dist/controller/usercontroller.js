@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fieldadd = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
+exports.getdetail2 = exports.userinsertcontroller3 = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
 const userservice_1 = require("../service/userservice");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 class userinsertcontroller {
@@ -73,13 +73,47 @@ class getdetails {
     }
 }
 exports.getdetails = getdetails;
-class fieldadd {
-    async addfields(req, resp) {
-        const fields = new userservice_1.addfield();
-        await fields.addingfield();
-        resp.status(200);
-        return;
+class userinsertcontroller3 {
+    constructor() {
+    }
+    async insertuser(req, resp) {
+        const { name, marks } = req.body;
+        if (!name || !marks) {
+            resp.status(400).json({ message: "no body recived" });
+            return;
+        }
+        const insertusers = new userservice_1.insertservice3();
+        const userid = crypto.randomUUID();
+        try {
+            await insertusers.insertusers({ userid, name, marks });
+            resp.status(200).json({ message: "user inserted" });
+            return;
+        }
+        catch (err) {
+            resp.status(400).json({ message: "insertion failed" });
+            return;
+        }
     }
 }
-exports.fieldadd = fieldadd;
+exports.userinsertcontroller3 = userinsertcontroller3;
+class getdetail2 {
+    constructor() {
+    }
+    async getdetailsofuser(req, resp) {
+        const { name } = req.body;
+        if (!name) {
+            return resp.status(400).json({ message: "no body" });
+        }
+        const getdetailsofusers2 = new userservice_1.getdetials2();
+        try {
+            const res = await getdetailsofusers2.getuserdetails({ name });
+            resp.status(200).json({ res });
+            return;
+        }
+        catch (err) {
+            return resp.status(400).json({ message: "get details failed" });
+        }
+    }
+}
+exports.getdetail2 = getdetail2;
 //# sourceMappingURL=usercontroller.js.map
