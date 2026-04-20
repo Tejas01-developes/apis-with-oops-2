@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import {  getdetail2, getdetails, userinsertcontroller, userinsertcontroller2, userinsertcontroller3 } from '../controller/usercontroller';
+import {  getdetail2, getdetails, userinsertcontroller, userinsertcontroller2, userinsertcontroller3, userinsertcontroller4 } from '../controller/usercontroller';
 
 export class route{
 private router:Router;
@@ -25,6 +25,16 @@ routes(){
   this.router.post("/3",(req,resp)=>{
     insertapi3.insertuser(req,resp)
   })  
+
+
+  const insertapi4=new userinsertcontroller4();
+  this.router.post("/4",(req,resp)=>{
+    insertapi4.insertuser(req,resp)
+  })  
+
+
+
+
 
   const getapi1=new getdetails();
   this.router.get("/get",(req,resp)=>{

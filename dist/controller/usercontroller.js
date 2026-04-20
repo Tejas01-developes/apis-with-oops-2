@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getdetail2 = exports.userinsertcontroller3 = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
+exports.userinsertcontroller4 = exports.getdetail2 = exports.userinsertcontroller3 = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
 const userservice_1 = require("../service/userservice");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 class userinsertcontroller {
@@ -116,4 +116,27 @@ class getdetail2 {
     }
 }
 exports.getdetail2 = getdetail2;
+class userinsertcontroller4 {
+    constructor() {
+    }
+    async insertuser(req, resp) {
+        const { name, marks } = req.body;
+        if (!name || !marks) {
+            resp.status(400).json({ message: "no body recived" });
+            return;
+        }
+        const insertusers = new userservice_1.insertservice4();
+        const userid = crypto.randomUUID();
+        try {
+            await insertusers.insertusers({ userid, name, marks });
+            resp.status(200).json({ message: "user inserted" });
+            return;
+        }
+        catch (err) {
+            resp.status(400).json({ message: "insertion failed" });
+            return;
+        }
+    }
+}
+exports.userinsertcontroller4 = userinsertcontroller4;
 //# sourceMappingURL=usercontroller.js.map

@@ -24,6 +24,10 @@ class route {
         this.router.post("/3", (req, resp) => {
             insertapi3.insertuser(req, resp);
         });
+        const insertapi4 = new usercontroller_1.userinsertcontroller4();
+        this.router.post("/4", (req, resp) => {
+            insertapi4.insertuser(req, resp);
+        });
         const getapi1 = new usercontroller_1.getdetails();
         this.router.get("/get", (req, resp) => {
             getapi1.getdetailsofuser(req, resp);

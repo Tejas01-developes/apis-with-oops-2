@@ -143,20 +143,40 @@ export class insertservice3{
 export class getdetials2{
 private dbcollection:Collection
     constructor(){
-this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION2 as string)
+this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION3 as string)
     }
 
     async getuserdetails(data:controllertype5){
 const res=await this.dbcollection.aggregate([
     {$match:{name:data.name}},
-    {$lookup:{from :process.env.USER_COLLECTION3,
+   
+    {$lookup:{from :process.env.USER_COLLECTION4,
     localField:"name",
     foreignField:"name",
     as:"lookupexample2"
 }},
-// {$addField:{totalmarks:{$add:[{$toInt:"$marks"},{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:"$$item.marks"}}}}]}}}
 
-// {$addFields:{totalmarks:{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:"$$item.marks"}}}}}}
+
+
+// {$set:{cast:"darji"}},
+// {$unwind:"$lookupexample2"},
+// {$unwind:"$lookupexample2.marks"},
+// {$facet:
+//     {dta:[
+//         {$project:{
+//             name:1,
+//             mark:"$lookupexample2.marks",
+//             _id:0
+//         }}
+//     ],
+// total:[
+//     {$count:"count"}
+// ]
+// }
+// }
+
+// {$addFields:{totalmarks:{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:["$$item.marks"]}}}}}},
+
 
 ]).toArray();
 
@@ -164,3 +184,31 @@ return res
 
     }
 }
+// {$addField:{totalmarks:{$add:[{$toInt:"$marks"},{$sum:{$map:{input:"$lookupexample2",as:"item",in:{$toInt:"$$item.marks"}}}}]}}}
+
+
+
+
+
+type controllertype6={
+    userid:string,
+    name:string,
+   marks:number[]
+}
+
+export class insertservice4{
+    private collection:Collection
+        constructor(){
+            this.collection=connect.getdb().collection(process.env.USER_COLLECTION4 as string)
+        }
+    
+       async insertusers(data:controllertype6):Promise<string>{
+        try{
+           await this.collection.insertOne({userid:data.userid,name:data.name,marks:data.marks})
+    
+            return "user inserted"
+        }catch(err){
+            throw new Error("user insertion failed")
+        }
+    }
+    }

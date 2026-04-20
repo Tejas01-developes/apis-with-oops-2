@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import {  getdetials, getdetials2, insertservice, insertservice2, insertservice3 } from "../service/userservice";
+import {  getdetials, getdetials2, insertservice, insertservice2, insertservice3, insertservice4 } from "../service/userservice";
 import bcrypt from 'bcrypt';
 
 type bodytype1={
@@ -179,3 +179,42 @@ return
     }
 }
 }
+
+
+
+
+type bodytype6={
+   
+    name:string,
+    marks:number[],
+
+
+}
+
+
+export class userinsertcontroller4{
+
+
+    constructor(){
+
+    }
+async insertuser(req:Request<{},{},bodytype6>,resp:Response):Promise<void>{
+    const{name,marks}=req.body;
+if(!name||!marks){
+    resp.status(400).json({message:"no body recived"})
+    return
+}
+
+const insertusers=new insertservice4();
+const userid:string=crypto.randomUUID();
+try{
+    await insertusers.insertusers({userid,name,marks})
+resp.status(200).json({message:"user inserted"})
+return
+}catch(err){
+    resp.status(400).json({message:"insertion failed"})
+    return
+}
+}
+}
+

@@ -51,5 +51,15 @@ export declare class getdetials2 {
     constructor();
     getuserdetails(data: controllertype5): Promise<import("bson").Document[]>;
 }
+type controllertype6 = {
+    userid: string;
+    name: string;
+    marks: number[];
+};
+export declare class insertservice4 {
+    private collection;
+    constructor();
+    insertusers(data: controllertype6): Promise<string>;
+}
 export {};
 //# sourceMappingURL=userservice.d.ts.map

@@ -44,5 +44,13 @@ export declare class getdetail2 {
     constructor();
     getdetailsofuser(req: Request<{}, {}, bodytype5>, resp: Response): Promise<Response<any, Record<string, any>> | undefined>;
 }
+type bodytype6 = {
+    name: string;
+    marks: number[];
+};
+export declare class userinsertcontroller4 {
+    constructor();
+    insertuser(req: Request<{}, {}, bodytype6>, resp: Response): Promise<void>;
+}
 export {};
 //# sourceMappingURL=usercontroller.d.ts.map
