@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import {  getdetials, getdetials2, insertservice, insertservice2, insertservice3, insertservice4 } from "../service/userservice";
+import {  getdetials, getdetials2, insertservice, insertservice2, insertservice3, insertservice4, loginservice } from "../service/userservice";
 import bcrypt from 'bcrypt';
 
 type bodytype1={
@@ -218,3 +218,36 @@ return
 }
 }
 
+type bodytype7={
+email:string,
+password:string
+}
+
+export class loginuser{
+
+    async login(req:Request<{},{},bodytype7>,resp:Response):Promise<void>{
+const{email,password}=req.body;
+if(!email || !password){
+    resp.status(400).json({message:"body not recived"})
+    return 
+}
+const loginapi=new loginservice();
+try{
+const res=await loginapi.loginservices({email});
+if(!res){
+    resp.status(400).json({message:"result not recived from the service"})
+    return
+}
+const compare=await bcrypt.compare(password,res.password);
+if(!compare){
+    resp.status(400).json({message:"password is incorrect"})
+    return
+}
+resp.status(200).json({message:"login success"})
+return
+}catch(err){
+    resp.status(400).json({message:"login failed"})
+    return
+}
+    }
+}

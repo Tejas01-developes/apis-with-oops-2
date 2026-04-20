@@ -40,6 +40,10 @@ class route {
         //   this.router.post("/add",(req,resp)=>{
         //     fieldapi.addfields(req,resp)
         //   })
+        const loginapi = new usercontroller_1.loginuser();
+        this.router.post("/login", (req, resp) => {
+            loginapi.login(req, resp);
+        });
         return this.router;
     }
 }

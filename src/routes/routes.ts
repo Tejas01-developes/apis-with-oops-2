@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import {  getdetail2, getdetails, userinsertcontroller, userinsertcontroller2, userinsertcontroller3, userinsertcontroller4 } from '../controller/usercontroller';
+import {  getdetail2, getdetails, loginuser, userinsertcontroller, userinsertcontroller2, userinsertcontroller3, userinsertcontroller4 } from '../controller/usercontroller';
 
 export class route{
 private router:Router;
@@ -50,6 +50,10 @@ routes(){
 //     fieldapi.addfields(req,resp)
 //   })
 
+const loginapi=new loginuser();
+this.router.post("/login",(req,resp)=>{
+  loginapi.login(req,resp)
+})
 
 
   return this.router

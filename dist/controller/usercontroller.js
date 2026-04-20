@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userinsertcontroller4 = exports.getdetail2 = exports.userinsertcontroller3 = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
+exports.loginuser = exports.userinsertcontroller4 = exports.getdetail2 = exports.userinsertcontroller3 = exports.getdetails = exports.userinsertcontroller2 = exports.userinsertcontroller = void 0;
 const userservice_1 = require("../service/userservice");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 class userinsertcontroller {
@@ -139,4 +139,33 @@ class userinsertcontroller4 {
     }
 }
 exports.userinsertcontroller4 = userinsertcontroller4;
+class loginuser {
+    async login(req, resp) {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            resp.status(400).json({ message: "body not recived" });
+            return;
+        }
+        const loginapi = new userservice_1.loginservice();
+        try {
+            const res = await loginapi.loginservices({ email });
+            if (!res) {
+                resp.status(400).json({ message: "result not recived from the service" });
+                return;
+            }
+            const compare = await bcrypt_1.default.compare(password, res.password);
+            if (!compare) {
+                resp.status(400).json({ message: "password is incorrect" });
+                return;
+            }
+            resp.status(200).json({ message: "login success" });
+            return;
+        }
+        catch (err) {
+            resp.status(400).json({ message: "login failed" });
+            return;
+        }
+    }
+}
+exports.loginuser = loginuser;
 //# sourceMappingURL=usercontroller.js.map

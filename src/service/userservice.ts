@@ -212,3 +212,33 @@ export class insertservice4{
         }
     }
     }
+
+type controllertype7={
+    email:string,
+}
+
+type returntype={
+    userid:string
+    _id:string
+    password:string
+    name:string
+}
+
+
+  export  class loginservice{
+        private collection:string ;
+        constructor(){
+this.collection=process.env.USER_COLLECTION as string
+        }
+async loginservices(data:controllertype7):Promise<returntype | null>{
+    try{
+const res=await connect.getdb().collection<returntype>(this.collection).findOne({email:data.email})
+
+return res
+    }catch(err){
+        throw new Error("getting details failed")
+    }
+}
+
+
+    }

@@ -61,5 +61,19 @@ export declare class insertservice4 {
     constructor();
     insertusers(data: controllertype6): Promise<string>;
 }
+type controllertype7 = {
+    email: string;
+};
+type returntype = {
+    userid: string;
+    _id: string;
+    password: string;
+    name: string;
+};
+export declare class loginservice {
+    private collection;
+    constructor();
+    loginservices(data: controllertype7): Promise<returntype | null>;
+}
 export {};
 //# sourceMappingURL=userservice.d.ts.map

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertservice4 = exports.getdetials2 = exports.insertservice3 = exports.getdetials = exports.insertservice2 = exports.insertservice = void 0;
+exports.loginservice = exports.insertservice4 = exports.getdetials2 = exports.insertservice3 = exports.getdetials = exports.insertservice2 = exports.insertservice = void 0;
 const dbconnection_js_1 = __importDefault(require("../dbconnection/dbconnection.js"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -83,11 +83,6 @@ class getdetials2 {
                     foreignField: "name",
                     as: "lookupexample2"
                 } },
-            // {$lookup:{secondcollection :process.env.USER_COLLECTION4,
-            //     samefield:"name",
-            //     samefield2:"name",
-            //     as:"lookupexample2"
-            // }},
             // {$set:{cast:"darji"}},
             // {$unwind:"$lookupexample2"},
             // {$unwind:"$lookupexample2.marks"},
@@ -126,4 +121,20 @@ class insertservice4 {
     }
 }
 exports.insertservice4 = insertservice4;
+class loginservice {
+    collection;
+    constructor() {
+        this.collection = process.env.USER_COLLECTION;
+    }
+    async loginservices(data) {
+        try {
+            const res = await dbconnection_js_1.default.getdb().collection(this.collection).findOne({ email: data.email });
+            return res;
+        }
+        catch (err) {
+            throw new Error("getting details failed");
+        }
+    }
+}
+exports.loginservice = loginservice;
 //# sourceMappingURL=userservice.js.map

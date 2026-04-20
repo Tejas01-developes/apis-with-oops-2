@@ -52,5 +52,12 @@ export declare class userinsertcontroller4 {
     constructor();
     insertuser(req: Request<{}, {}, bodytype6>, resp: Response): Promise<void>;
 }
+type bodytype7 = {
+    email: string;
+    password: string;
+};
+export declare class loginuser {
+    login(req: Request<{}, {}, bodytype7>, resp: Response): Promise<void>;
+}
 export {};
 //# sourceMappingURL=usercontroller.d.ts.map
