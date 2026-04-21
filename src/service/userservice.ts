@@ -85,11 +85,18 @@ this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION as stri
     }
 
     async getuserdetails(data:controllertype3){
-const res=await this.dbcollection.aggregate([{$match:{name:data.name}},{$lookup:{from :process.env.USER_COLLECTION2,
+const res=await this.dbcollection.aggregate([{$match:{name:data.name}},
+    {$lookup:{from :process.env.USER_COLLECTION2,
     localField:"name",
     foreignField:"name",
     as:"lookupexample"
-}}]).toArray();
+    }
+},
+{$set:{age:"$age"}}
+
+
+
+]).toArray();
 
 return res
 
@@ -97,15 +104,7 @@ return res
 }
 
 
-// export class addfield{
-// private collection:Collection
-//     constructor(){
-// this.collection=connect.getdb().collection(process.env.USER_COLLECTION2 as string)
-//     }
-//     addingfield(){
-//         this.collection.aggregate([{$addfield:{state:"Gujarat"}}])
-//     }
-// }
+
 
 
 
@@ -143,29 +142,47 @@ export class insertservice3{
 export class getdetials2{
 private dbcollection:Collection
     constructor(){
-this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION3 as string)
+this.dbcollection=connect.getdb().collection(process.env.USER_COLLECTION4 as string)
     }
 
     async getuserdetails(data:controllertype5){
 const res=await this.dbcollection.aggregate([
     {$match:{name:data.name}},
+    // {$addfield:{marks:{$toInt:"$marks"}}},
+    // {$set:}
+    // {$match:{marks:{$gt:"70"}}},
+    // {$merge:"mergeexample"}
    
-    {$lookup:{from :process.env.USER_COLLECTION4,
-    localField:"name",
-    foreignField:"name",
-    as:"lookupexample2"
-}},
+//     {$lookup:{from :process.env.USER_COLLECTION4,
+//     localField:"name",
+//     foreignField:"name",
+//     as:"lookupexample2"
+// }},
 
 
 
 // {$set:{cast:"darji"}},
-// {$unwind:"$lookupexample2"},
-// {$unwind:"$lookupexample2.marks"},
+{$unwind:"$marks"},
+// {$count:"result no"},
+
+{$facet:{dta:[
+  {$project:{_id:0}},
+  {$limit:1},
+  
+],
+resultt:[
+{$count:"result output"}
+]
+}}
+
+
+
+
 // {$facet:
 //     {dta:[
 //         {$project:{
 //             name:1,
-//             mark:"$lookupexample2.marks",
+//             mark:"$marks",
 //             _id:0
 //         }}
 //     ],
