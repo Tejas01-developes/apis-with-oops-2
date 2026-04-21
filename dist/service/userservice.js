@@ -45,11 +45,15 @@ class getdetials {
         this.dbcollection = dbconnection_js_1.default.getdb().collection(process.env.USER_COLLECTION);
     }
     async getuserdetails(data) {
-        const res = await this.dbcollection.aggregate([{ $match: { name: data.name } }, { $lookup: { from: process.env.USER_COLLECTION2,
+        const res = await this.dbcollection.aggregate([{ $match: { name: data.name } },
+            { $lookup: { from: process.env.USER_COLLECTION2,
                     localField: "name",
                     foreignField: "name",
                     as: "lookupexample"
-                } }]).toArray();
+                }
+            },
+            { $set: { age: "$age" } }
+        ]).toArray();
         return res;
     }
 }
@@ -73,24 +77,37 @@ exports.insertservice3 = insertservice3;
 class getdetials2 {
     dbcollection;
     constructor() {
-        this.dbcollection = dbconnection_js_1.default.getdb().collection(process.env.USER_COLLECTION3);
+        this.dbcollection = dbconnection_js_1.default.getdb().collection(process.env.USER_COLLECTION4);
     }
     async getuserdetails(data) {
         const res = await this.dbcollection.aggregate([
             { $match: { name: data.name } },
-            { $lookup: { from: process.env.USER_COLLECTION4,
-                    localField: "name",
-                    foreignField: "name",
-                    as: "lookupexample2"
-                } },
+            // {$addfield:{marks:{$toInt:"$marks"}}},
+            // {$set:}
+            // {$match:{marks:{$gt:"70"}}},
+            // {$merge:"mergeexample"}
+            //     {$lookup:{from :process.env.USER_COLLECTION4,
+            //     localField:"name",
+            //     foreignField:"name",
+            //     as:"lookupexample2"
+            // }},
             // {$set:{cast:"darji"}},
-            // {$unwind:"$lookupexample2"},
-            // {$unwind:"$lookupexample2.marks"},
+            { $unwind: "$marks" },
+            // {$count:"result no"},
+            { $facet: { dta: [
+                        { $project: { _id: 0 } },
+                        { $limit: 1 },
+                        { $skip: 1 }
+                    ],
+                    resultt: [
+                        { $count: "result output" }
+                    ]
+                } }
             // {$facet:
             //     {dta:[
             //         {$project:{
             //             name:1,
-            //             mark:"$lookupexample2.marks",
+            //             mark:"$marks",
             //             _id:0
             //         }}
             //     ],
