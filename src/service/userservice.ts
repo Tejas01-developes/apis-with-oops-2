@@ -105,11 +105,6 @@ return res
 
 
 
-
-
-
-
-
 type controllertype4={
     userid:string,
     name:string,
