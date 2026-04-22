@@ -256,6 +256,4 @@ return res
         throw new Error("getting details failed")
     }
 }
-
-
     }
